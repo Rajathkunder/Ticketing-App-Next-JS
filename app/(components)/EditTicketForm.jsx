@@ -12,6 +12,7 @@ const EditTicketForm = ({ ticket }) => {
     progress: 0,
     status: "not started",
     category: "Hardware Problem",
+    image: "test.png",
   };
 
   if (EDITMODE) {
@@ -24,6 +25,7 @@ const EditTicketForm = ({ ticket }) => {
   }
 
   const [formData, setFormData] = useState(startingTicketData);
+  console.log("formdata is" + JSON.stringify(formData));
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -175,6 +177,7 @@ const EditTicketForm = ({ ticket }) => {
           <option value="started">Started</option>
           <option value="done">Done</option>
         </select>
+
         <input
           type="submit"
           className="btn max-w-xs"

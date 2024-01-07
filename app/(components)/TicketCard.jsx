@@ -3,6 +3,7 @@ import PriorityDisplay from "./PriorityDisplay";
 import DeleteBlock from "./DeleteBlock";
 import ProgressDisplay from "./ProgressDisplay";
 import Link from "next/link";
+import Image from "next/image";
 
 const TicketCard = ({ ticket }) => {
   function formatTimestamp(timestamp) {
@@ -14,7 +15,7 @@ const TicketCard = ({ ticket }) => {
       minute: "2-digit",
       hour12: true,
     };
-
+    //console.log("image url is" + ticket.image);
     const date = new Date(timestamp);
     const formattedDate = date.toLocaleString("en-US", options);
 
@@ -22,6 +23,18 @@ const TicketCard = ({ ticket }) => {
   }
 
   const createdDateTime = formatTimestamp(ticket.createdAt);
+  let filePath = "";
+  let imagePath;
+  if (ticket.image !== "") {
+    const extractFilename = (filePath) => {
+      const startIndex = filePath.lastIndexOf("\\") + 1;
+      const filename = filePath.slice(startIndex);
+      return filename;
+    };
+    const filename = extractFilename(filePath);
+    console.log("filename is" + filename);
+    imagePath = `/images/${ticket.image}`;
+  }
 
   return (
     <div className="flex flex-col hover:bg-card-hover bg-card rounded-md shadow-lg p-3 m-2">
@@ -31,6 +44,7 @@ const TicketCard = ({ ticket }) => {
           <DeleteBlock id={ticket._id} />
         </div>
       </div>
+
       <Link href={`/TicketPage/${ticket._id}`} style={{ display: "contents" }}>
         <h4 className="mb-1">{ticket.title}</h4>
         <hr className="h-px  border-0 bg-page mb-2 "></hr>
